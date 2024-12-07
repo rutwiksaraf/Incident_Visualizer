@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Visualizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Incident Visualizer</h1>
+
+        <!-- Error message display -->
+        {% if error %}
+        <div class="error-message">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Upload form -->
+        <form id="upload-form" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Upload PDF:</label>
+                <input type="file" id="file" name="file" accept=".pdf"><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="url">Or Enter PDF URL:</label>
+                <input type="url" id="url" name="urls" placeholder="https://example.com/file.pdf"><br><br>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+
+        <!-- Display results after processing -->
+        {% if script and div %}
+        <h2>Visualizations</h2>
+        <div>
+            <!-- Embedding Bokeh plots -->
+            <div>{{ script|safe }}</div>
+            <div>{{ div|safe }}</div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
