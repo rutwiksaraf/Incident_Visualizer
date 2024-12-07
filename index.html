@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Visualizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Incident Visualizer</h1>
+    <form id="upload-form">
+        <label for="file">Upload PDF File:</label>
+        <input type="file" id="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="visualizations"></div>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            });
+            if (response.ok) {
+                const visResponse = await fetch('/visualizations');
+                const data = await visResponse.json();
+                const visContainer = document.getElementById('visualizations');
+                visContainer.innerHTML = `
+                    <h2>Clustering</h2>
+                    <img src="${data.clustering}" />
+                    <h2>Bar Chart</h2>
+                    <img src="${data.bar_chart}" />
+                    <h2>Pie Chart</h2>
+                    <img src="${data.pie_chart}" />
+                `;
+            } else {
+                alert('Error uploading file or generating visualizations.');
+            }
+        });
+    </script>
+</body>
+</html>
