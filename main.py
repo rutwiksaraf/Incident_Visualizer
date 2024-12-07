@@ -79,7 +79,7 @@ def results():
     df = df.dropna(subset=['Date_Time'])
 
     if df.empty:
-        return render_template('results.html', error="No valid incident data to display.")
+        return render_template('visuals.html', error="No valid incident data to display.")
 
     try:
         # Vectorize the 'Nature' column (incident type) using TF-IDF
@@ -189,16 +189,16 @@ def results():
 
     except Exception as e:
         print(f"Error creating visualizations: {e}")
-        return render_template('results.html', error="An error occurred while generating visualizations.")
+        return render_template('visuals.html', error="An error occurred while generating visualizations.")
 
     if request.method == 'POST':
         feedback = request.form.get('feedback')
         if feedback:
             print("User Feedback:", feedback)
             feedback_submitted = True
-            return render_template('results.html', script=script, div=div, feedback_submitted=feedback_submitted)
+            return render_template('visuals.html', script=script, div=div, feedback_submitted=feedback_submitted)
 
-    return render_template('results.html', script=script, div=div, feedback_submitted=False)
+    return render_template('visuals.html', script=script, div=div, feedback_submitted=False)
 
 if __name__ == '__main__':
     app.run(debug=True)
