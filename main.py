@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 import os
 import pandas as pd
-from fetchindcidents import fetchIncidents
-from extractincidents import extractIncidents
+from fetch_indcidents import fetchIncidents
+from extract_incidents import extractIncidents
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
@@ -17,16 +17,14 @@ from urllib.error import HTTPError, URLError
 import io
 
 app = Flask(__name__)
-app.secret_key = "Ishtmeet"  # Secure the session with a secret key
+app.secret_key = "rutwiksaraf3" 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Collect input data (URL and files)
         urls = request.form.get('urls', '').strip()
         files = request.files.getlist('files')
 
-        # List to hold incidents and errors
         incidents = []
         errors = []
 
@@ -62,11 +60,11 @@ def index():
 
         # Store incidents in session for later use
         session['incidents_data'] = incidents
-        return redirect(url_for('results'))
+        return redirect(url_for('visuals'))
     return render_template('index.html')
 
-@app.route('/results', methods=['GET', 'POST'])
-def results():
+@app.route('/visuals', methods=['GET', 'POST'])
+def visuals():
     # Retrieve incidents data from session
     incidents = session.get('incidents_data', [])
     if not incidents:
@@ -95,8 +93,8 @@ def results():
         df['x'] = coords[:, 0]
         df['y'] = coords[:, 1]
 
-        # Assign colors based on cluster
-        palette = Category10[10]
+        # Assign new colors based on cluster
+        palette = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]  # Custom color palette
         df['color'] = [palette[i] for i in df['cluster']]
 
         # Create Bokeh clustering plot
@@ -135,7 +133,7 @@ def results():
             source=source_nature,
             legend_field="Nature",
             line_color='white',
-            fill_color='navy'
+            fill_color='#FF6347'  # Change to Tomato color
         )
         bar_plot.xaxis.major_label_orientation = 1.2
         bar_plot.y_range.start = 0
@@ -161,7 +159,7 @@ def results():
             y='Count',
             source=source_date,
             line_width=2,
-            color='green',
+            color='#8A2BE2',  # Change to BlueViolet color
             legend_label="Incidents"
         )
         time_plot.circle(
@@ -170,7 +168,7 @@ def results():
             source=source_date,
             fill_color="white",
             size=8,
-            color='green'
+            color='#8A2BE2'  # Change to BlueViolet color
         )
         time_plot.xaxis.axis_label = "Date"
         time_plot.yaxis.axis_label = "Number of Incidents"
