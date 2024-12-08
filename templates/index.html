@@ -4,20 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Incident Visualizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #3a3a3a;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        input[type="file"],
+        input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        button.submit-btn {
+            background-color: #007bff; 
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button.submit-btn:hover {
+            background-color: #0056b3; 
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #333;
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Incident Visualizer</h1>
+        <h1>Crime Visualizer</h1>
 
-        <!-- Error message display -->
         {% if error %}
         <div class="error-message">
             <p>{{ error }}</p>
         </div>
         {% endif %}
 
-        <!-- Upload form -->
         <form id="upload-form" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="file">Upload PDF:</label>
@@ -32,11 +109,9 @@
             <button type="submit" class="submit-btn">Submit</button>
         </form>
 
-        <!-- Display results after processing -->
         {% if script and div %}
         <h2>Visualizations</h2>
         <div>
-            <!-- Embedding Bokeh plots -->
             <div>{{ script|safe }}</div>
             <div>{{ div|safe }}</div>
         </div>

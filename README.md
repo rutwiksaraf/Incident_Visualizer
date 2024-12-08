@@ -269,6 +269,10 @@ Open a web browser and navigate to http://127.0.0.1:5000 to access the applicati
    - If the incident data is inconsistent (e.g., missing required fields like `Date_Time` or `Nature`), the application may not be able to process it correctly, leading to empty plots or errors.
 
 
+## Video Demonstration
+
+<video controls src="../Recording 2024-12-07 220938.mp4" title="Title"></video>
+
 
 
 
