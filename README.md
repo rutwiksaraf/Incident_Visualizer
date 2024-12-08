@@ -196,17 +196,26 @@ The final step is integrating the entire workflow into a user-friendly web inter
 
 ---
 
-## Installing Dependencies
+### Steps to Run the Code:
+1. Install dependencies:
+    ```bash
+    pip install Flask
+    pip install pandas
+    pip install scikit-learn
+    pip install bokeh
+    pip install PyPDF2
+    ```
 
-To install all the required dependencies for this project, run the following commands in your terminal or command prompt:
+2. Run the application:
+    ```bash
+    python main.py
+    ```
 
-``` pip install Flask  ```
-``` pip install pandas ```
-``` pip install PyPDF2 ```
-``` pip install scikit-learn ```
-``` pip install bokeh==3.2.1 ```
-``` pip install urllib3 ```
-``` pip install matplotlib seaborn ``` 
+3. Open the web browser:
+    ```bash
+    http://127.0.0.1:5000
+    ```
+
 
 ## File Descriptions
 
